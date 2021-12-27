@@ -1,0 +1,33 @@
+version: '3.8'
+services: 
+    mongo-fees-checkout:
+        container_name: mongo-fees-checkout
+        image: mongo
+        restart: always
+        networks:
+            - checkout-network
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: example
+        volumes:
+            - ./storage/mongo:/data/db
+            
+    mongo-express-fees-checkout:
+        container_name: mongo-express-fees-checkout
+        image: mongo-express
+        restart: always
+        networks:
+            - checkout-network
+        depends_on:
+            - mongo-fees-checkout
+        ports:
+            - 8081:8081
+        environment:
+            ME_CONFIG_MONGODB_ADMINUSERNAME: root
+            ME_CONFIG_MONGODB_ADMINPASSWORD: example
+            ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo-fees-checkout:27017/
+volumes:
+    src:
+networks:
+  checkout-network:
+    external: true
