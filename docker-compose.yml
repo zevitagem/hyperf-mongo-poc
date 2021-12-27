@@ -13,6 +13,7 @@ services:
       - ./:/app
     links:
         - mongo-fees-checkout
+        - hyperf-skeleton-redis
     ports:
       - 9501:9501
     depends_on:

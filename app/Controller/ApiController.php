@@ -15,13 +15,15 @@ use App\Library\MongoManager;
 use Hyperf\Logger\LoggerFactory;
 use App\Library\Fees;
 use Hyperf\HttpServer\Contract\RequestInterface;
+use App\Service\UserService;
 
 class ApiController extends AbstractController
 {
     private $database;
     private $error = null;
 
-    public function __construct(MongoManager $databaseManager, LoggerFactory $loggerFactory)
+    public function __construct(MongoManager $databaseManager,
+                                LoggerFactory $loggerFactory)
     {
         $this->database = $databaseManager;
         $this->logger   = $loggerFactory->get('log', 'default');
@@ -45,7 +47,7 @@ class ApiController extends AbstractController
         return $this->error;
     }
 
-    public function index()
+    public function list()
     {
         if (!$this->canContinue()) {
             return $this->stop();
@@ -55,7 +57,7 @@ class ApiController extends AbstractController
         return $api->get();
     }
 
-    public function add()
+    public function store()
     {
         if (!$this->canContinue()) {
             return $this->stop();

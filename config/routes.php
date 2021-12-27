@@ -20,8 +20,17 @@ Router::get('/favicon.ico', function () {
 
 Router::addGroup('/api', function () {
 
-    Router::post('/add', [\App\Controller\ApiController::class, 'add']);
-    Router::get('', [\App\Controller\ApiController::class, 'index']);
-    Router::delete('/destroy', [\App\Controller\ApiController::class, 'destroy']);
-    //Router::addRoute(['GET'], '/index', 'App\Controller\ApiController@index');
+    Router::addGroup('/mongo', function () {
+        Router::post('/store', [\App\Controller\ApiController::class, 'store']);
+        Router::get('/list', [\App\Controller\ApiController::class, 'list']);
+        Router::get('', [\App\Controller\ApiController::class, 'list']);
+        Router::delete('/destroy', [\App\Controller\ApiController::class, 'destroy']);
+    });
+
+    Router::addGroup('/cache', function () {
+        Router::get('/user_list', [\App\Controller\UserController::class, 'list']);
+        Router::get('', [\App\Controller\UserController::class, 'list']);
+        Router::get('/user_find/{key}', [\App\Controller\UserController::class, 'find']);
+        Router::post('/user_store', [\App\Controller\UserController::class, 'store']);
+    });
 });
