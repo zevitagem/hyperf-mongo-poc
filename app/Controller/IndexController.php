@@ -18,15 +18,9 @@ class IndexController extends AbstractController
         $user = $this->request->input('user', 'Hyperf');
         $method = $this->request->getMethod();
 
-        ob_start();
-phpinfo();
-$phpinfoAsString = ob_get_contents();
-ob_get_clean();
-
         return [
             'method' => $method,
-            'message' => "Hello {$user}.",
-                'content' => $phpinfoAsString
+            'message' => "Hello {$user}."
          ];
     }
 }

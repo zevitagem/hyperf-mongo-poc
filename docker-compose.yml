@@ -3,32 +3,21 @@ version: '3.9'
 services:
 
   hyperf-skeleton:
+    container_name: hyperf-skeleton
     build:
         context: ./
-    container_name: hyperf-skeleton
-    #image: hyperf/hyperf:8.0-alpine-v3.13-swoole
     working_dir: /app
     entrypoint: ["php", "bin/hyperf.php", "server:watch"]
     volumes:
       - ./:/app
     links:
-        - mongo-fees-checkout
-        - hyperf-skeleton-redis
+        - mongo-poc
+        - redis-poc
     ports:
       - 9501:9501
-    depends_on:
-      - hyperf-skeleton-redis
     networks:
-      - checkout-network
-
-  hyperf-skeleton-redis:
-    container_name: hyperf-skeleton-redis
-    image: redis:latest
-    ports:
-      - 6379:6379
-    networks:
-      - checkout-network
+      - network-poc
       
 networks:
-  checkout-network:
+  network-poc:
     external: true
