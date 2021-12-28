@@ -22,29 +22,19 @@ class ApiController extends AbstractController
     private $database;
     private $error = null;
 
-    public function __construct(MongoManager $databaseManager,
-                                LoggerFactory $loggerFactory)
+    public function __construct(MongoManager $databaseManager)
     {
         $this->database = $databaseManager;
-        $this->logger   = $loggerFactory->get('log', 'default');
-
-        try {
-            $this->database::connect();
-        } catch (\Throwable $exc) {
-            $message     = $exc->getMessage();
-            $this->error = $message;
-            $this->logger->info('joseph: '.$message);
-        }
     }
 
     private function canContinue()
     {
-        return ($this->error === null);
+        return $this->database::isConnected();
     }
 
     private function stop()
     {
-        return $this->error;
+        return 'Você não pode prosseguir devido não possuir configurações básicas válidas';
     }
 
     public function list()

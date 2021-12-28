@@ -20,6 +20,11 @@ class MongoManager
         self::$connection = new \MongoDB\Client("mongodb://$user:$password@$host:$port");
     }
 
+    public static function isConnected()
+    {
+        return (!empty(self::$connection));
+    }
+
     private static function canPerform()
     {
         if (empty(self::getConnection())) {

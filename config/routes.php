@@ -25,7 +25,7 @@ Router::addGroup('/api', function () {
         Router::get('/list', [\App\Controller\ApiController::class, 'list']);
         Router::get('', [\App\Controller\ApiController::class, 'list']);
         Router::delete('/destroy', [\App\Controller\ApiController::class, 'destroy']);
-    });
+    }, ['middleware' => [\App\Middleware\Database\MongoMiddleware::class]]);
 
     Router::addGroup('/cache', function () {
         Router::get('/user_list', [\App\Controller\UserController::class, 'list']);
